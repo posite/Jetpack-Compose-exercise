@@ -7,21 +7,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -41,8 +41,8 @@ class MainActivity : ComponentActivity() {
             Compose1Theme {
                 // A surface container using the 'background' color from the theme
 
-                ButtonEx()
-                //ColumnEx()
+                //ButtonEx()
+                ColumnEx()
             }
         }
     }
@@ -85,7 +85,7 @@ class MainActivity : ComponentActivity() {
                 //clickedCount++
                 //setCount(getCount + 1)
                 //mutableState.intValue = mutableState.intValue.inc()
-                viewModel.onClick()
+                viewModel.onOneClick()
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Gray,
@@ -101,7 +101,7 @@ class MainActivity : ComponentActivity() {
                 fontStyle = FontStyle.Italic,
                 fontSize = 24.sp,
                 lineHeight = 30.sp,
-                text = "Clicked Count: ${viewModel.count.value}",
+                text = "Clicked Count: ${viewModel.count1.value}",
             )
         }
     }
@@ -109,6 +109,32 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun ColumnEx() {
         Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp)) {
+            ClickableText(
+                onClick = { viewModel.onOneClick() },
+                style = TextStyle(
+                    background = Color.LightGray, fontSize = 24.sp, fontStyle = FontStyle.Italic, fontWeight = FontWeight.Bold),
+                text = AnnotatedString("Clicked Count: ${viewModel.count1.value}")
+            )
+            Spacer(modifier = Modifier.padding(8.dp))
+            Divider(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.padding(8.dp))
+
+            ClickableText(
+                onClick = { viewModel.onTwoClick() },
+                style = TextStyle(
+                    background = Color.Yellow, fontSize = 24.sp, fontStyle = FontStyle.Italic, fontWeight = FontWeight.Bold),
+                text = AnnotatedString("Clicked Count: ${viewModel.count2.value}")
+            )
+            Spacer(modifier = Modifier.padding(8.dp))
+            Divider(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.padding(8.dp))
+
+            ClickableText(
+                onClick = { viewModel.onThreeClick() },
+                style = TextStyle(
+                    background = Color.Cyan, fontSize = 24.sp, fontStyle = FontStyle.Italic, fontWeight = FontWeight.Bold),
+                text = AnnotatedString("Clicked Count: ${viewModel.count3.value}")
+            )
 
         }
     }
@@ -118,8 +144,8 @@ class MainActivity : ComponentActivity() {
     fun GreetingPreview() {
         Compose1Theme {
 
-            ButtonEx()
-//            ColumnEx()
+            //ButtonEx()
+            ColumnEx()
         }
     }
 }

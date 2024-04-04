@@ -8,10 +8,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
-    private val _count = mutableStateOf(0)
-    override val count: State<Int> = _count
+    private val _count1 = mutableStateOf(0)
+    override val count1: State<Int>
+        get() = _count1
 
-    fun onClick() {
-        _count.value = _count.value + 1
+    private val _count2 = mutableStateOf(0)
+    override val count2: State<Int>
+        get() = _count2
+
+    private val _count3 = mutableStateOf(0)
+    override val count3: State<Int>
+        get() = _count3
+
+    fun onOneClick() {
+        _count1.value = _count1.value + 1
     }
+
+    fun onTwoClick() {
+        _count2.value = _count2.value + 2
+    }
+
+    fun onThreeClick() {
+        _count3.value = _count3.value + 3
+    }
+
 }
