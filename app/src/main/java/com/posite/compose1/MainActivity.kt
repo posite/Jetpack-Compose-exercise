@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
 
                 ButtonEx()
+                ColumnEx()
             }
         }
     }
@@ -59,12 +61,16 @@ fun TextEx() {
 
 @Composable
 fun ButtonEx() {
-    // remember 1 변수로 바로 수정
+    // remember 1 var 변수처럼 사용
     var clickedCount by remember {
         mutableIntStateOf(0)
     }
 
-    // remember 2  get, set으로 분리
+    //setValue 함수를 사용하여 값 변경
+    val mutableState = remember { mutableIntStateOf(0) }
+
+
+    // remember 3  get, set으로 분리
     val (getCount, setCount) = remember {
         mutableIntStateOf(0)
     }
@@ -76,6 +82,7 @@ fun ButtonEx() {
             Toast.makeText(context, "Button Clicked", Toast.LENGTH_SHORT).show()
             clickedCount++
             setCount(getCount + 1)
+            mutableState.intValue = mutableState.intValue.inc()
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.Gray,
@@ -91,9 +98,14 @@ fun ButtonEx() {
             fontStyle = FontStyle.Italic,
             fontSize = 24.sp,
             lineHeight = 30.sp,
-            text = "Clicked Count: $getCount",
+            text = "Clicked Count: ${mutableState.intValue}",
         )
     }
+}
+
+@Composable
+fun ColumnEx() {
+
 }
 
 
@@ -103,5 +115,6 @@ fun GreetingPreview() {
     Compose1Theme {
 
         ButtonEx()
+        ColumnEx()
     }
 }
