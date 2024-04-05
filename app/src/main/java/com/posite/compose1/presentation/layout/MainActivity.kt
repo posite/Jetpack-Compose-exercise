@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.posite.compose1.R
 import com.posite.compose1.presentation.layout.vm.MainViewModelImpl
 import com.posite.compose1.ui.theme.Compose1Theme
@@ -43,10 +45,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<MainViewModelImpl>()
-    private val passwordResource : (Boolean) -> Int = {
-        if(it) { // true
+    private val passwordResource: (Boolean) -> Int = {
+        if (it) { // true
             R.drawable.baseline_visibility_24
-        }else{
+        } else {
             R.drawable.baseline_visibility_off_24
         }
     }
@@ -59,7 +61,8 @@ class MainActivity : ComponentActivity() {
 
                 //ButtonEx()
                 //olumnEx()
-                FieldsEx()
+                //FieldsEx()
+                ImageEx()
             }
         }
     }
@@ -214,17 +217,42 @@ class MainActivity : ComponentActivity() {
                 },
                 visualTransformation = if (viewModel.userInput2Visible.value) VisualTransformation.None else PasswordVisualTransformation()
             )
+
+            Spacer(modifier = Modifier.padding(12.dp))
+
+            Text(text = "입력1: ${viewModel.userInput1.value}", maxLines = 1)
+
+            Spacer(modifier = Modifier.padding(8.dp))
+            Text(text = "입력2: ${viewModel.userInput2.value}", maxLines = 1)
         }
+    }
+
+    @Composable
+    fun ImageEx() {
+        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 24.dp)) {
+            Image(
+                painter = painterResource(id = R.drawable.testing),
+                contentDescription = "local image"
+            )
+
+            Spacer(modifier = Modifier.padding(12.dp))
+
+            AsyncImage(
+                model = "",
+                contentDescription = "외부 image"
+            )
+        }
+
     }
 
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
         Compose1Theme {
-
+            ImageEx()
             //ButtonEx()
             //ColumnEx()
-            FieldsEx()
+            // FieldsEx()
         }
     }
 }
