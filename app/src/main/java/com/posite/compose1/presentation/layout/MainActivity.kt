@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,6 +24,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -62,7 +64,8 @@ class MainActivity : ComponentActivity() {
                 //ButtonEx()
                 //olumnEx()
                 //FieldsEx()
-                ImageEx()
+                //ImageEx()
+                BoxEx()
             }
         }
     }
@@ -245,14 +248,24 @@ class MainActivity : ComponentActivity() {
 
     }
 
+    @Composable
+    fun BoxEx() {
+        Box(modifier = Modifier.fillMaxSize()) {
+            Text(text = "정 가운데", modifier = Modifier.align(Alignment.Center))
+            Text(text = "왼쪽 위", modifier = Modifier.align(Alignment.TopStart))
+            Text(text = "오른쪽 아래", modifier = Modifier.align(Alignment.BottomEnd))
+        }
+    }
+
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
         Compose1Theme {
-            ImageEx()
+            //ImageEx()
             //ButtonEx()
             //ColumnEx()
             // FieldsEx()
+            BoxEx()
         }
     }
 }
