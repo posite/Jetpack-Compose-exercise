@@ -10,6 +10,7 @@ interface MainViewModel {
     val userInput2: State<String>
     val userInput1Visible: State<Boolean>
     val userInput2Visible: State<Boolean>
+    val surfaceSelect: State<Boolean>
 
     fun onOneClick()
     fun onTwoClick()
@@ -18,4 +19,5 @@ interface MainViewModel {
     fun onUser2Inputted(input: String)
     fun onUser1InputVisibleClick()
     fun onUser2InputVisibleClick()
+    fun onSurfaceClick()
 }

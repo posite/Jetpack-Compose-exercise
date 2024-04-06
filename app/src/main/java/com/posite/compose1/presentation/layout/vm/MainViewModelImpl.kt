@@ -38,6 +38,10 @@ class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
     override val userInput2Visible: State<Boolean>
         get() = _userInput2Visible
 
+    private val _surfaceSelect = mutableStateOf(false)
+    override val surfaceSelect: State<Boolean>
+        get() = _surfaceSelect
+
     override fun onOneClick() {
         _count1.value = _count1.value + 1
     }
@@ -66,6 +70,10 @@ class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
 
     override fun onUser2InputVisibleClick() {
         _userInput2Visible.value = _userInput2Visible.value.not()
+    }
+
+    override fun onSurfaceClick() {
+        _surfaceSelect.value = _surfaceSelect.value.not()
     }
 
 

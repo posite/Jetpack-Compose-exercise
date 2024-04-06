@@ -2,6 +2,7 @@ package com.posite.compose1.presentation.layout
 
 import android.os.Bundle
 import android.util.Log
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,6 +27,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -42,6 +45,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
 import com.posite.compose1.R
 import com.posite.compose1.presentation.layout.vm.MainViewModelImpl
@@ -63,14 +67,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Compose1Theme {
-                // A surface container using the 'background' color from the theme
-
                 //ButtonEx()
                 //olumnEx()
                 //FieldsEx()
                 //ImageEx()
                 //BoxEx()
-                CardEx()
+                //CardEx()
+                //WebViewEx()
+                SurfaceEx()
             }
         }
     }
@@ -278,7 +282,31 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun WebViewEx() {
+        AndroidView(factory = {
+            WebView(it).apply {
+                loadUrl("https://github.com/posite")
+            }
+        })
+    }
 
+    @Composable
+    fun SurfaceEx() {
+        Surface(
+            shape = RoundedCornerShape(30.dp),
+            contentColor = Color.Gray,
+            shadowElevation = 8.dp,
+            tonalElevation = if (viewModel.surfaceSelect.value) {
+                999.dp
+            } else {
+                0.dp
+            },
+            selected = viewModel.surfaceSelect.value,
+            onClick = {
+                viewModel.onSurfaceClick()
+            }
+        ) {
+            Text(modifier = Modifier.padding(4.dp), text = "compose surface")
+        }
     }
 
     @Preview(showBackground = true)
@@ -290,7 +318,9 @@ class MainActivity : ComponentActivity() {
             //ColumnEx()
             // FieldsEx()
             //BoxEx()
-            CardEx()
+            //CardEx()
+            //WebViewEx()
+            SurfaceEx()
         }
     }
 }
