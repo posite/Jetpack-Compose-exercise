@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,9 +15,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -65,7 +69,8 @@ class MainActivity : ComponentActivity() {
                 //olumnEx()
                 //FieldsEx()
                 //ImageEx()
-                BoxEx()
+                //BoxEx()
+                CardEx()
             }
         }
     }
@@ -257,6 +262,25 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    fun CardEx() {
+        Card(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            border = BorderStroke(5.dp, Color.Cyan),
+            shape = CutCornerShape(20.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 20.dp)
+        ) {
+
+        }
+    }
+
+    @Composable
+    fun WebViewEx() {
+
+    }
+
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
@@ -265,7 +289,8 @@ class MainActivity : ComponentActivity() {
             //ButtonEx()
             //ColumnEx()
             // FieldsEx()
-            BoxEx()
+            //BoxEx()
+            CardEx()
         }
     }
 }
