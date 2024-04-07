@@ -9,8 +9,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,17 +21,32 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,7 +91,8 @@ class MainActivity : ComponentActivity() {
                 //BoxEx()
                 //CardEx()
                 //WebViewEx()
-                SurfaceEx()
+                //SurfaceEx()
+                ScaffoldEx()
             }
         }
     }
@@ -309,6 +327,70 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun ScaffoldEx() {
+        Scaffold(
+            modifier = Modifier.padding(bottom = 4.dp),
+            topBar = {
+                TopAppBar(title = { Text(text = "TopAppBar") }, navigationIcon = {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "ArrowBack")
+                }, actions = {
+                    Icon(Icons.Default.Menu, contentDescription = "Menu")
+                    Icon(Icons.Default.Search, contentDescription = "Search")
+                }, colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    titleContentColor = MaterialTheme.colorScheme.primary,
+                )
+                )
+            },
+            floatingActionButton = {
+                FloatingActionButton(
+                    onClick = { viewModel.onOneClick() },
+                    elevation = FloatingActionButtonDefaults.elevation(0.dp)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Add")
+                }
+            },
+            bottomBar = {
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shadowElevation = 0.dp,
+                    shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        IconButton(onClick = { }) {
+                            Icon(Icons.Default.Place, contentDescription = "Place")
+                        }
+                        IconButton(onClick = { }) {
+                            Icon(Icons.Default.Home, contentDescription = "Home")
+                        }
+                        IconButton(onClick = { }) {
+                            Icon(Icons.Default.AccountCircle, contentDescription = "Account")
+                        }
+                    }
+                }
+            }
+        ) { paddingValue ->
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(
+                        vertical = paddingValue.calculateTopPadding() + 8.dp,
+                        horizontal = 16.dp
+                    ),
+            ) {
+                Text(text = "counted : ${viewModel.count1.value}")
+            }
+        }
+    }
+
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
@@ -320,7 +402,8 @@ class MainActivity : ComponentActivity() {
             //BoxEx()
             //CardEx()
             //WebViewEx()
-            SurfaceEx()
+            //SurfaceEx()
+            ScaffoldEx()
         }
     }
 }
