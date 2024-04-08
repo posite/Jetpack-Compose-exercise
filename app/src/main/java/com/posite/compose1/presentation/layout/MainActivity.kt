@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -92,7 +96,8 @@ class MainActivity : ComponentActivity() {
                 //CardEx()
                 //WebViewEx()
                 //SurfaceEx()
-                ScaffoldEx()
+                //ScaffoldEx()
+                LazyColumnRowEx()
             }
         }
     }
@@ -391,6 +396,54 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    fun LazyColumnRowEx() {
+        val list = listOf<List<String>>(listOf("가", "나", "다","라"), listOf("마", "바","사","아"))
+        Column {
+            LazyRow() {
+                items(list) { item ->
+                    Column {
+                        item.forEach {
+                            KoreanItem(it)
+                        }
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.padding(12.dp))
+            LazyColumn(
+                modifier = Modifier,
+            ) {
+                items(list) { item ->
+                    Row {
+                        item.forEach {
+                            KoreanItem(it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun KoreanItem(item: String) {
+        Card(
+            modifier = Modifier
+                .padding(8.dp)
+                .clickable { Log.d("lazy", item) },
+            shape = RoundedCornerShape(8.dp),
+            elevation = CardDefaults.cardElevation(8.dp)
+        ) {
+            Text(
+                text = item,
+                modifier = Modifier.padding(16.dp),
+                style = TextStyle(
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+        }
+    }
+
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
@@ -403,7 +456,8 @@ class MainActivity : ComponentActivity() {
             //CardEx()
             //WebViewEx()
             //SurfaceEx()
-            ScaffoldEx()
+            //ScaffoldEx()
+            LazyColumnRowEx()
         }
     }
 }
