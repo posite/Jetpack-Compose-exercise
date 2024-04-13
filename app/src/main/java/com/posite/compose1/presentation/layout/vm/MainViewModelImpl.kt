@@ -81,11 +81,11 @@ class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
         _surfaceSelect.value = _surfaceSelect.value.not()
     }
 
-    override fun progressUp() {
+    override fun upProgress() {
         _progressAmount.floatValue = _progressAmount.floatValue + 0.1f
     }
 
-    override fun progressDown() {
+    override fun downProgress() {
         _progressAmount.floatValue = _progressAmount.floatValue - 0.1f
     }
 

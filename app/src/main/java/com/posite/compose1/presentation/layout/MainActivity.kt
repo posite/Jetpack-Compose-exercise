@@ -54,11 +54,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -71,6 +70,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.posite.compose1.R
 import com.posite.compose1.presentation.layout.vm.MainViewModel
@@ -103,7 +103,8 @@ class MainActivity : ComponentActivity() {
                 //SurfaceEx()
                 //ScaffoldEx()
                 //LazyColumnRowEx()
-                ProgressIndicatorEx()
+                //ProgressIndicatorEx()
+                Buttons()
             }
         }
     }
@@ -123,7 +124,7 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    fun ButtonEx() {
+    fun ButtonEx(viewModel: MainViewModel) {
         // remember 1 var 변수처럼 사용
         //var clickedCount by remember {
         //    mutableIntStateOf(0)
@@ -452,21 +453,20 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun ProgressIndicatorEx() {
-        val (getProgress, setProgress) = remember {
-            mutableFloatStateOf(0.0f)
-        }
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 24.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp, vertical = 24.dp)
+        ) {
             LinearProgressIndicator(
-                progress = getProgress,
+                progress = viewModel.progressAmount.value,
                 modifier = Modifier.height(12.dp),
                 color = Color.Yellow,
                 trackColor = Color.LightGray
             )
             Spacer(modifier = Modifier.padding(12.dp))
             CircularProgressIndicator(
-                progress = getProgress,
+                progress = viewModel.progressAmount.value,
                 modifier = Modifier.height(12.dp),
                 color = Color.Blue,
                 trackColor = Color.LightGray
@@ -474,7 +474,7 @@ class MainActivity : ComponentActivity() {
             Spacer(modifier = Modifier.padding(24.dp))
             Row {
                 Button(
-                    onClick = { setProgress(getProgress + 0.1f) },
+                    onClick = { viewModel.upProgress() },
                     colors = ButtonDefaults.buttonColors(
                         contentColor = Color.Cyan,
                         containerColor = Color.Gray
@@ -484,7 +484,8 @@ class MainActivity : ComponentActivity() {
                 }
                 Spacer(modifier = Modifier.padding(12.dp))
                 Button(
-                    onClick = {setProgress(getProgress - 0.1f) }, colors = ButtonDefaults.buttonColors(
+                    onClick = { viewModel.downProgress() },
+                    colors = ButtonDefaults.buttonColors(
                         contentColor = Color.Magenta,
                         containerColor = Color.Green
                     )
@@ -496,10 +497,35 @@ class MainActivity : ComponentActivity() {
 
     }
 
+    @Composable
+    fun Buttons() {
+        Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+            ButtonFormatEx(CutCornerShape(20.dp), "CutCornerShape")
+            Spacer(modifier = Modifier.padding(8.dp))
+            ButtonFormatEx(RoundedCornerShape(20.dp), "RoundedCornerShape")
+        }
+    }
+
+    @Composable
+    fun ButtonFormatEx(shape: Shape, text: String) {
+        Button(
+            onClick = { Toast.makeText(this, "$text button 눌림!", Toast.LENGTH_SHORT).show() },
+            colors = ButtonDefaults.buttonColors(
+                contentColor = Color.Cyan,
+                containerColor = Color.Gray
+            ),
+            border = BorderStroke(2.dp, Color.Magenta),
+            shape = shape,
+        ) {
+            Text(text)
+        }
+    }
+
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
         Compose1Theme {
+            val viewModel: MainViewModel = hiltViewModel<MainViewModelImpl>()
             //ImageEx()
             //ButtonEx()
             //ColumnEx()
@@ -510,7 +536,8 @@ class MainActivity : ComponentActivity() {
             //SurfaceEx()
             //ScaffoldEx()
             //LazyColumnRowEx()
-            ProgressIndicatorEx()
+            //ProgressIndicatorEx()
+            Buttons()
         }
     }
 }

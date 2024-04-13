@@ -21,6 +21,6 @@ interface MainViewModel {
     fun onUser1InputVisibleClick()
     fun onUser2InputVisibleClick()
     fun onSurfaceClick()
-    fun progressUp()
-    fun progressDown()
+    fun upProgress()
+    fun downProgress()
 }
