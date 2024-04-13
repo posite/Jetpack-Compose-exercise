@@ -11,6 +11,7 @@ interface MainViewModel {
     val userInput1Visible: State<Boolean>
     val userInput2Visible: State<Boolean>
     val surfaceSelect: State<Boolean>
+    val progressAmount: State<Float>
 
     fun onOneClick()
     fun onTwoClick()
@@ -20,4 +21,6 @@ interface MainViewModel {
     fun onUser1InputVisibleClick()
     fun onUser2InputVisibleClick()
     fun onSurfaceClick()
+    fun progressUp()
+    fun progressDown()
 }

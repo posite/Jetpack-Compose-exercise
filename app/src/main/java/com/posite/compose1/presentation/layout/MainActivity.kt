@@ -37,12 +37,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -52,6 +54,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -69,13 +73,14 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
 import com.posite.compose1.R
+import com.posite.compose1.presentation.layout.vm.MainViewModel
 import com.posite.compose1.presentation.layout.vm.MainViewModelImpl
 import com.posite.compose1.ui.theme.Compose1Theme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val viewModel by viewModels<MainViewModelImpl>()
+    private val viewModel: MainViewModel by viewModels<MainViewModelImpl>()
     private val passwordResource: (Boolean) -> Int = {
         if (it) { // true
             R.drawable.baseline_visibility_24
@@ -97,7 +102,8 @@ class MainActivity : ComponentActivity() {
                 //WebViewEx()
                 //SurfaceEx()
                 //ScaffoldEx()
-                LazyColumnRowEx()
+                //LazyColumnRowEx()
+                ProgressIndicatorEx()
             }
         }
     }
@@ -398,7 +404,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun LazyColumnRowEx() {
-        val list = listOf<List<String>>(listOf("가", "나", "다","라"), listOf("마", "바","사","아"))
+        val list = listOf<List<String>>(listOf("가", "나", "다", "라"), listOf("마", "바", "사", "아"))
         Column {
             LazyRow() {
                 items(list) { item ->
@@ -444,6 +450,52 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Composable
+    fun ProgressIndicatorEx() {
+        val (getProgress, setProgress) = remember {
+            mutableFloatStateOf(0.0f)
+        }
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 24.dp)) {
+            LinearProgressIndicator(
+                progress = getProgress,
+                modifier = Modifier.height(12.dp),
+                color = Color.Yellow,
+                trackColor = Color.LightGray
+            )
+            Spacer(modifier = Modifier.padding(12.dp))
+            CircularProgressIndicator(
+                progress = getProgress,
+                modifier = Modifier.height(12.dp),
+                color = Color.Blue,
+                trackColor = Color.LightGray
+            )
+            Spacer(modifier = Modifier.padding(24.dp))
+            Row {
+                Button(
+                    onClick = { setProgress(getProgress + 0.1f) },
+                    colors = ButtonDefaults.buttonColors(
+                        contentColor = Color.Cyan,
+                        containerColor = Color.Gray
+                    ),
+                ) {
+                    Text(text = "Up")
+                }
+                Spacer(modifier = Modifier.padding(12.dp))
+                Button(
+                    onClick = {setProgress(getProgress - 0.1f) }, colors = ButtonDefaults.buttonColors(
+                        contentColor = Color.Magenta,
+                        containerColor = Color.Green
+                    )
+                ) {
+                    Text(text = "Down")
+                }
+            }
+        }
+
+    }
+
     @Preview(showBackground = true)
     @Composable
     fun GreetingPreview() {
@@ -457,7 +509,8 @@ class MainActivity : ComponentActivity() {
             //WebViewEx()
             //SurfaceEx()
             //ScaffoldEx()
-            LazyColumnRowEx()
+            //LazyColumnRowEx()
+            ProgressIndicatorEx()
         }
     }
 }

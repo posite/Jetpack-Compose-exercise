@@ -2,6 +2,7 @@ package com.posite.compose1.presentation.layout.vm
 
 import android.util.Log
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,6 +43,10 @@ class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
     override val surfaceSelect: State<Boolean>
         get() = _surfaceSelect
 
+    private val _progressAmount = mutableFloatStateOf(0.0f)
+    override val progressAmount: State<Float>
+        get() = _progressAmount
+
     override fun onOneClick() {
         _count1.value = _count1.value + 1
     }
@@ -74,6 +79,14 @@ class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
 
     override fun onSurfaceClick() {
         _surfaceSelect.value = _surfaceSelect.value.not()
+    }
+
+    override fun progressUp() {
+        _progressAmount.floatValue = _progressAmount.floatValue + 0.1f
+    }
+
+    override fun progressDown() {
+        _progressAmount.floatValue = _progressAmount.floatValue - 0.1f
     }
 
 
