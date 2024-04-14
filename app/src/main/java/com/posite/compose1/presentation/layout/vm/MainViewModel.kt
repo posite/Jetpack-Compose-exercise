@@ -1,6 +1,7 @@
 package com.posite.compose1.presentation.layout.vm
 
 import androidx.compose.runtime.State
+import com.posite.compose1.data.dto.test.response.UserInfoResponseDto
 
 interface MainViewModel {
     val count1: State<Int>
@@ -12,6 +13,7 @@ interface MainViewModel {
     val userInput2Visible: State<Boolean>
     val surfaceSelect: State<Boolean>
     val progressAmount: State<Float>
+    val allUserInfo: State<UserInfoResponseDto>
 
     fun onOneClick()
     fun onTwoClick()
@@ -23,4 +25,5 @@ interface MainViewModel {
     fun onSurfaceClick()
     fun upProgress()
     fun downProgress()
+    fun fetchAllUserInfo()
 }

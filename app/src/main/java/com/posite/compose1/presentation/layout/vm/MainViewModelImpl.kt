@@ -5,11 +5,18 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.posite.compose1.data.dto.test.response.UserInfoResponseDto
+import com.posite.compose1.domain.usecase.test.FetchAllUserUseCase
+import com.posite.compose1.uitl.onError
+import com.posite.compose1.uitl.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
+class MainViewModelImpl @Inject constructor(private val fetchAllUserUseCase: FetchAllUserUseCase) :
+    ViewModel(), MainViewModel {
     private val _count1 = mutableStateOf(0)
     override val count1: State<Int>
         get() = _count1
@@ -46,6 +53,10 @@ class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
     private val _progressAmount = mutableFloatStateOf(0.0f)
     override val progressAmount: State<Float>
         get() = _progressAmount
+
+    private val _allUserInfo = mutableStateOf(UserInfoResponseDto())
+    override val allUserInfo: State<UserInfoResponseDto>
+        get() = _allUserInfo
 
     override fun onOneClick() {
         _count1.value = _count1.value + 1
@@ -87,6 +98,19 @@ class MainViewModelImpl @Inject constructor() : ViewModel(), MainViewModel {
 
     override fun downProgress() {
         _progressAmount.floatValue = _progressAmount.floatValue - 0.1f
+    }
+
+    override fun fetchAllUserInfo() {
+        viewModelScope.launch {
+            fetchAllUserUseCase().collect { result ->
+                result.onSuccess { userInfo ->
+                    Log.d("FetchAllUser", "success: $userInfo")
+                    _allUserInfo.value = userInfo
+                }.onError {
+                    Log.d("FetchAllUser", "error: $it")
+                }
+            }
+        }
     }
 
 

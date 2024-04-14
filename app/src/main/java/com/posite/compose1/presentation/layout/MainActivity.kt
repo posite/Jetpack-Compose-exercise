@@ -76,6 +76,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.posite.compose1.R
+import com.posite.compose1.data.dto.test.response.UserInfoModelItem
 import com.posite.compose1.presentation.layout.vm.MainViewModel
 import com.posite.compose1.presentation.layout.vm.MainViewModelImpl
 import com.posite.compose1.ui.theme.Compose1Theme
@@ -108,7 +109,8 @@ class MainActivity : ComponentActivity() {
                 //LazyColumnRowEx()
                 //ProgressIndicatorEx()
                 //Buttons()
-                NavEx()
+                //NavEx()
+                RetrofitEx()
             }
         }
     }
@@ -528,85 +530,132 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-}
-
-@Composable
-fun NavEx() {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            HomeEx(navController)
-        }
-        composable("detail/{number}") {
-            DetailEx(number = it.arguments?.getString("number").toString(), nav = navController)
-        }
-    }
-}
-
-@Composable
-fun HomeEx(nav: NavHostController) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = "Home", fontSize = 40.sp)
-        Spacer(modifier = Modifier.padding(12.dp))
-        Button(onClick = { nav.navigate("detail/1") }) {
-            Text("Go Detail1")
-        }
-        Spacer(modifier = Modifier.padding(8.dp))
-        Button(onClick = { nav.navigate("detail/2") }) {
-            Text("Go Detail2")
+    @Composable
+    fun NavEx() {
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = "home") {
+            composable("home") {
+                HomeEx(navController)
+            }
+            composable("detail/{number}") {
+                DetailEx(number = it.arguments?.getString("number").toString(), nav = navController)
+            }
         }
     }
 
-}
-
-@Composable
-fun DetailEx(number: String, nav: NavHostController) {
-
-    val goDetailNumber = if (number == "1") {
-        2
-    } else {
-        1
-    }
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = number, fontSize = 40.sp)
-        Spacer(modifier = Modifier.padding(12.dp))
-        Button(onClick = { nav.popBackStack(route = "home", inclusive = false) }) {
-            Text("return home")
-        }
-
-        Spacer(modifier = Modifier.padding(12.dp))
-        Button(onClick = { nav.navigate("detail/$goDetailNumber") }) {
-            Text("Go Detail$goDetailNumber")
+    @Composable
+    fun HomeEx(nav: NavHostController) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Home", fontSize = 40.sp)
+            Spacer(modifier = Modifier.padding(12.dp))
+            Button(onClick = { nav.navigate("detail/1") }) {
+                Text("Go Detail1")
+            }
+            Spacer(modifier = Modifier.padding(8.dp))
+            Button(onClick = { nav.navigate("detail/2") }) {
+                Text("Go Detail2")
+            }
         }
 
     }
-}
 
+    @Composable
+    fun DetailEx(number: String, nav: NavHostController) {
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Compose1Theme {
-        //ImageEx()
-        //ButtonEx()
-        //ColumnEx()
-        // FieldsEx()
-        //BoxEx()
-        //CardEx()
-        //WebViewEx()
-        //SurfaceEx()
-        //ScaffoldEx()
-        //LazyColumnRowEx()
-        //ProgressIndicatorEx()
-        //Buttons()
-        NavEx()
+        val goDetailNumber = if (number == "1") {
+            2
+        } else {
+            1
+        }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = number, fontSize = 40.sp)
+            Spacer(modifier = Modifier.padding(12.dp))
+            Button(onClick = { nav.popBackStack(route = "home", inclusive = false) }) {
+                Text("return home")
+            }
+
+            Spacer(modifier = Modifier.padding(12.dp))
+            Button(onClick = { nav.navigate("detail/$goDetailNumber") }) {
+                Text("Go Detail$goDetailNumber")
+            }
+
+        }
     }
+
+    @Composable
+    fun RetrofitEx() {
+        viewModel.fetchAllUserInfo()
+        LazyColumn(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.spacedBy(12.dp )) {
+            items(viewModel.allUserInfo.value) { item ->
+                Column {
+                    UserItem(item)
+
+                }
+            }
+        }
+
+    }
+
+    @Composable
+    fun UserItem(item: UserInfoModelItem) {
+        Card(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            shape = RoundedCornerShape(8.dp),
+            elevation = CardDefaults.cardElevation(4.dp)
+        ) {
+            Column {
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(modifier = Modifier.padding(horizontal = 16.dp), text = "id: ${item.id}")
+                Spacer(modifier = Modifier.padding(2.dp))
+                Text(modifier = Modifier.padding(horizontal = 16.dp), text = "name: ${item.name}")
+                Spacer(modifier = Modifier.padding(2.dp))
+                Text(modifier = Modifier.padding(horizontal =16.dp), text = "email: ${item.email}")
+                Spacer(modifier = Modifier.padding(2.dp))
+                Text(modifier = Modifier.padding(horizontal =16.dp), text = "address: ${item.address.street} ${item.address.suite} ${item.address.city}")
+                Spacer(modifier = Modifier.padding(2.dp))
+                Text(modifier = Modifier.padding(horizontal =16.dp), text = "phone: ${item.phone}")
+                Spacer(modifier = Modifier.padding(2.dp))
+                Text(modifier = Modifier.padding(horizontal =16.dp), text = "website: ${item.website}")
+                Spacer(modifier = Modifier.padding(2.dp))
+                Text(modifier = Modifier.padding(horizontal =16.dp), text = "company: ${item.company.name} ${item.company.catchPhrase} ${item.company.bs}")
+                Spacer(modifier = Modifier.padding(4.dp))
+
+            }
+        }
+    }
+
+
+    @Preview(showBackground = true)
+    @Composable
+    fun GreetingPreview() {
+        Compose1Theme {
+            //ImageEx()
+            //ButtonEx()
+            //ColumnEx()
+            // FieldsEx()
+            //BoxEx()
+            //CardEx()
+            //WebViewEx()
+            //SurfaceEx()
+            //ScaffoldEx()
+            //LazyColumnRowEx()
+            //ProgressIndicatorEx()
+            //Buttons()
+            //NavEx()
+            RetrofitEx()
+        }
+    }
+
 }
+
+
+
+
