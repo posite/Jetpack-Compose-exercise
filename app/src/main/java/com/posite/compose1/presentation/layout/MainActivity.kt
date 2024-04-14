@@ -70,7 +70,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.posite.compose1.R
 import com.posite.compose1.presentation.layout.vm.MainViewModel
@@ -104,7 +107,8 @@ class MainActivity : ComponentActivity() {
                 //ScaffoldEx()
                 //LazyColumnRowEx()
                 //ProgressIndicatorEx()
-                Buttons()
+                //Buttons()
+                NavEx()
             }
         }
     }
@@ -499,7 +503,10 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun Buttons() {
-        Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             ButtonFormatEx(CutCornerShape(20.dp), "CutCornerShape")
             Spacer(modifier = Modifier.padding(8.dp))
             ButtonFormatEx(RoundedCornerShape(20.dp), "RoundedCornerShape")
@@ -521,23 +528,85 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    @Preview(showBackground = true)
-    @Composable
-    fun GreetingPreview() {
-        Compose1Theme {
-            val viewModel: MainViewModel = hiltViewModel<MainViewModelImpl>()
-            //ImageEx()
-            //ButtonEx()
-            //ColumnEx()
-            // FieldsEx()
-            //BoxEx()
-            //CardEx()
-            //WebViewEx()
-            //SurfaceEx()
-            //ScaffoldEx()
-            //LazyColumnRowEx()
-            //ProgressIndicatorEx()
-            Buttons()
+}
+
+@Composable
+fun NavEx() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            HomeEx(navController)
         }
+        composable("detail/{number}") {
+            DetailEx(number = it.arguments?.getString("number").toString(), nav = navController)
+        }
+    }
+}
+
+@Composable
+fun HomeEx(nav: NavHostController) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Home", fontSize = 40.sp)
+        Spacer(modifier = Modifier.padding(12.dp))
+        Button(onClick = { nav.navigate("detail/1") }) {
+            Text("Go Detail1")
+        }
+        Spacer(modifier = Modifier.padding(8.dp))
+        Button(onClick = { nav.navigate("detail/2") }) {
+            Text("Go Detail2")
+        }
+    }
+
+}
+
+@Composable
+fun DetailEx(number: String, nav: NavHostController) {
+
+    val goDetailNumber = if (number == "1") {
+        2
+    } else {
+        1
+    }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = number, fontSize = 40.sp)
+        Spacer(modifier = Modifier.padding(12.dp))
+        Button(onClick = { nav.popBackStack(route = "home", inclusive = false) }) {
+            Text("return home")
+        }
+
+        Spacer(modifier = Modifier.padding(12.dp))
+        Button(onClick = { nav.navigate("detail/$goDetailNumber") }) {
+            Text("Go Detail$goDetailNumber")
+        }
+
+    }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    Compose1Theme {
+        //ImageEx()
+        //ButtonEx()
+        //ColumnEx()
+        // FieldsEx()
+        //BoxEx()
+        //CardEx()
+        //WebViewEx()
+        //SurfaceEx()
+        //ScaffoldEx()
+        //LazyColumnRowEx()
+        //ProgressIndicatorEx()
+        //Buttons()
+        NavEx()
     }
 }
