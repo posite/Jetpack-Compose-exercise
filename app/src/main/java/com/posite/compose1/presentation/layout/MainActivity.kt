@@ -1,5 +1,6 @@
 package com.posite.compose1.presentation.layout
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.webkit.WebView
@@ -110,7 +111,8 @@ class MainActivity : ComponentActivity() {
                 //ProgressIndicatorEx()
                 //Buttons()
                 //NavEx()
-                RetrofitEx()
+                //RetrofitEx()
+                GetPostByRandomId()
             }
         }
     }
@@ -593,7 +595,10 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun RetrofitEx() {
         viewModel.fetchAllUserInfo()
-        LazyColumn(modifier = Modifier.fillMaxSize(),verticalArrangement = Arrangement.spacedBy(12.dp )) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             items(viewModel.allUserInfo.value) { item ->
                 Column {
                     UserItem(item)
@@ -617,17 +622,70 @@ class MainActivity : ComponentActivity() {
                 Spacer(modifier = Modifier.padding(2.dp))
                 Text(modifier = Modifier.padding(horizontal = 16.dp), text = "name: ${item.name}")
                 Spacer(modifier = Modifier.padding(2.dp))
-                Text(modifier = Modifier.padding(horizontal =16.dp), text = "email: ${item.email}")
+                Text(modifier = Modifier.padding(horizontal = 16.dp), text = "email: ${item.email}")
                 Spacer(modifier = Modifier.padding(2.dp))
-                Text(modifier = Modifier.padding(horizontal =16.dp), text = "address: ${item.address.street} ${item.address.suite} ${item.address.city}")
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = "address: ${item.address.street} ${item.address.suite} ${item.address.city}"
+                )
                 Spacer(modifier = Modifier.padding(2.dp))
-                Text(modifier = Modifier.padding(horizontal =16.dp), text = "phone: ${item.phone}")
+                Text(modifier = Modifier.padding(horizontal = 16.dp), text = "phone: ${item.phone}")
                 Spacer(modifier = Modifier.padding(2.dp))
-                Text(modifier = Modifier.padding(horizontal =16.dp), text = "website: ${item.website}")
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = "website: ${item.website}"
+                )
                 Spacer(modifier = Modifier.padding(2.dp))
-                Text(modifier = Modifier.padding(horizontal =16.dp), text = "company: ${item.company.name} ${item.company.catchPhrase} ${item.company.bs}")
+                Text(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    text = "company: ${item.company.name} ${item.company.catchPhrase} ${item.company.bs}"
+                )
                 Spacer(modifier = Modifier.padding(4.dp))
 
+            }
+        }
+    }
+
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+    @Composable
+    fun GetPostByRandomId() {
+        viewModel.fetchPost((1..100).random())
+        Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
+            FloatingActionButton(onClick = { viewModel.fetchPost((1..100).random()) }) {
+                Icon(Icons.Default.Add, contentDescription = "Add")
+            }
+        }) {
+            if (viewModel.post.value.id != 0) {
+                Card(
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    shape = RoundedCornerShape(8.dp),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ) {
+                    Column {
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        Text(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            text = "Posit Id: ${viewModel.post.value.id}"
+                        )
+                        Spacer(modifier = Modifier.padding(2.dp))
+                        Text(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            text = "User Id: ${viewModel.post.value.userId}"
+                        )
+                        Spacer(modifier = Modifier.padding(2.dp))
+                        Text(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            text = "Title: ${viewModel.post.value.title}"
+                        )
+                        Spacer(modifier = Modifier.padding(2.dp))
+                        Text(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            text = "Body: ${viewModel.post.value.body}"
+                        )
+                        Spacer(modifier = Modifier.padding(4.dp))
+
+                    }
+                }
             }
         }
     }
@@ -650,7 +708,8 @@ class MainActivity : ComponentActivity() {
             //ProgressIndicatorEx()
             //Buttons()
             //NavEx()
-            RetrofitEx()
+            //RetrofitEx()
+            GetPostByRandomId()
         }
     }
 

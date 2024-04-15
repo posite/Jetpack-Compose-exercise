@@ -6,8 +6,10 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.posite.compose1.data.dto.test.response.TestPostResponseDto
 import com.posite.compose1.data.dto.test.response.UserInfoResponseDto
 import com.posite.compose1.domain.usecase.test.FetchAllUserUseCase
+import com.posite.compose1.domain.usecase.test.FetchPostById
 import com.posite.compose1.uitl.onError
 import com.posite.compose1.uitl.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +17,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModelImpl @Inject constructor(private val fetchAllUserUseCase: FetchAllUserUseCase) :
+class MainViewModelImpl @Inject constructor(
+    private val fetchAllUserUseCase: FetchAllUserUseCase,
+    private val fetchPostById: FetchPostById
+) :
     ViewModel(), MainViewModel {
     private val _count1 = mutableStateOf(0)
     override val count1: State<Int>
@@ -57,6 +62,10 @@ class MainViewModelImpl @Inject constructor(private val fetchAllUserUseCase: Fet
     private val _allUserInfo = mutableStateOf(UserInfoResponseDto())
     override val allUserInfo: State<UserInfoResponseDto>
         get() = _allUserInfo
+
+    private val _post = mutableStateOf(TestPostResponseDto("", 0, "", 0))
+    override val post: State<TestPostResponseDto>
+        get() = _post
 
     override fun onOneClick() {
         _count1.value = _count1.value + 1
@@ -108,6 +117,19 @@ class MainViewModelImpl @Inject constructor(private val fetchAllUserUseCase: Fet
                     _allUserInfo.value = userInfo
                 }.onError {
                     Log.d("FetchAllUser", "error: $it")
+                }
+            }
+        }
+    }
+
+    override fun fetchPost(postId: Int) {
+        viewModelScope.launch {
+            fetchPostById(postId).collect { result ->
+                result.onSuccess { post ->
+                    Log.d("FetchPostById", "success: $post")
+                    _post.value = post
+                }.onError {
+                    Log.d("FetchPostById", "error: $it")
                 }
             }
         }
