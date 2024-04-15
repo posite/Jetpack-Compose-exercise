@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -125,7 +126,7 @@ class MainActivity : ComponentActivity() {
                 //NavEx()
                 //RetrofitEx()
                 //GetPostByRandomId()
-                DrawerEx()
+                //DrawerEx()
             }
         }
     }
@@ -782,6 +783,38 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun DialogEx() {
+        val dialogFlag = remember { mutableStateOf(false) }
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Button(onClick = { dialogFlag.value = dialogFlag.value.not() }) {
+                Text(text = "Show Dialog")
+            }
+            if (dialogFlag.value) {
+                AlertDialog(onDismissRequest = { },
+                    confirmButton = {
+                        Button(onClick = { dialogFlag.value = false }) {
+                            Text(text = "OK")
+                        }
+                    },
+                    dismissButton = {
+                        Button(onClick = { dialogFlag.value = false }) {
+                            Text(text = "NO")
+                        }
+                    },
+                    title = { Text(text = "Dialog!") },
+                    text = {})
+            }
+
+        }
+    }
+
 
     @Preview(showBackground = true)
     @Composable
@@ -802,7 +835,8 @@ class MainActivity : ComponentActivity() {
             //NavEx()
             //RetrofitEx()
             //GetPostByRandomId()
-            DrawerEx()
+            //DrawerEx()
+            DialogEx()
         }
     }
 
