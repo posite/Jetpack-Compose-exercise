@@ -71,7 +71,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
@@ -824,7 +823,9 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun CanvasEx() {
         Box(modifier = Modifier.fillMaxSize()) {
-            Canvas(modifier = Modifier.size(100.dp).align(Alignment.Center)) {
+            Canvas(modifier = Modifier
+                .size(100.dp)
+                .align(Alignment.Center)) {
                 drawRoundRect(color = Color.Blue, cornerRadius = CornerRadius(20f, 20f))
             }
         }
@@ -857,7 +858,3 @@ class MainActivity : ComponentActivity() {
     }
 
 }
-
-
-
-
