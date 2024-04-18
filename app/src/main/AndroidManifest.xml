@@ -38,6 +38,12 @@
         <activity
             android:name=".presentation.ex3.Ex3Activity"
             android:screenOrientation="portrait"
+            android:exported="false"
+            android:theme="@style/Theme.Compose1" />
+
+        <activity
+            android:name=".presentation.ex4.Ex4Activity"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/Theme.Compose1">
             <intent-filter>

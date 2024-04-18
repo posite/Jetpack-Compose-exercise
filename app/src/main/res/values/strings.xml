@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">compose1</string>
+    <string name="calendar_format">"yyyy년 MM월"</string>
 </resources>
