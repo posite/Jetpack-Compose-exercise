@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_blue">#69b5ef</color>
     <color name="sky_blue">#00bbfa</color>
+    <color name="coupange_brown">#4B1613</color>
+    <color name="coupang_red">#C64132</color>
+    <color name="coupang_orange">#DE9D40</color>
+    <color name="coupang_green">#9AB952</color>
+    <color name="coupang_blue">#65A1D4</color>
+    <color name="gray_eeeeee">#eeeeee</color>
 </resources>

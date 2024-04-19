@@ -28,4 +28,19 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 40.sp
     ),
+    titleSmall = TextStyle(
+        fontFamily = meetme,
+        fontWeight = FontWeight.Bold,
+        fontSize = 40.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = meetme,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = meetme,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp
+    ),
 )
