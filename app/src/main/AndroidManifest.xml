@@ -56,6 +56,12 @@
         <activity
             android:name=".presentation.ex6.CoupangEx"
             android:screenOrientation="portrait"
+            android:exported="false"
+            android:theme="@style/Theme.Compose1" />
+
+        <activity
+            android:name=".presentation.ex7.PoketExActivity"
+            android:screenOrientation="portrait"
             android:exported="true"
             android:theme="@style/Theme.Compose1">
             <intent-filter>

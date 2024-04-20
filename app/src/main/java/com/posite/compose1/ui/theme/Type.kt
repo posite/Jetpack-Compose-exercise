@@ -21,7 +21,7 @@ val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = meetme,
         fontWeight = FontWeight.Normal,
-        fontSize = 80.sp
+        fontSize = 32.sp
     ),
     labelLarge = TextStyle(
         fontFamily = meetme,
