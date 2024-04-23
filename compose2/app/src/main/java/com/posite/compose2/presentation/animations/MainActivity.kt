@@ -2,6 +2,7 @@ package com.posite.compose2.presentation.animations
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.posite.compose2.presentation.animations.compose.SliderPieChart
 import com.posite.compose2.presentation.base.BaseActivity
 import com.posite.compose2.ui.theme.Compose2Theme
 import dagger.hilt.android.AndroidEntryPoint
@@ -10,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity() {
     @Composable
     override fun InitView() {
-        RoundCharts()
+        SliderPieChart()
     }
 
 }
@@ -19,6 +20,6 @@ class MainActivity : BaseActivity() {
 @Composable
 fun GreetingPreview() {
     Compose2Theme {
-        RoundCharts()
+        SliderPieChart()
     }
 }

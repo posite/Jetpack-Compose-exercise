@@ -1,4 +1,4 @@
-package com.posite.compose2.presentation.animations
+package com.posite.compose2.presentation.animations.compose
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState

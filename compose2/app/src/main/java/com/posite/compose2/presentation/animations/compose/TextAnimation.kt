@@ -1,4 +1,4 @@
-package com.posite.compose2.presentation.animations
+package com.posite.compose2.presentation.animations.compose
 
 import android.icu.text.NumberFormat
 import androidx.compose.animation.core.animateIntAsState
