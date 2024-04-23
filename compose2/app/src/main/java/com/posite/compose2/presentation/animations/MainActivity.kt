@@ -10,7 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : BaseActivity() {
     @Composable
     override fun InitView() {
-        TextAnimation()
+        RoundCharts()
     }
 
 }
@@ -19,6 +19,6 @@ class MainActivity : BaseActivity() {
 @Composable
 fun GreetingPreview() {
     Compose2Theme {
-        TextAnimation()
+        RoundCharts()
     }
 }
