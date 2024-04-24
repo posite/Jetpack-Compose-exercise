@@ -314,10 +314,16 @@ fun CoupangCategories() {
                 alpha = 0.5f
             )
             drawRoundRect(
-                topLeft = Offset((scrollState.value.toFloat()/scrollState.maxValue.toFloat())*149f, 0f),
+                topLeft = Offset(
+                    (scrollState.value.toFloat() / scrollState.maxValue.toFloat()) * 149f,
+                    0f
+                ),
                 color = Color.Black,
                 cornerRadius = CornerRadius(20f),
-                size = Size(if((scrollState.value.toFloat()/scrollState.maxValue.toFloat())*100f <= 95f) 40f else 30f, 8f)
+                size = Size(
+                    if ((scrollState.value.toFloat() / scrollState.maxValue.toFloat()) * 100f <= 95f) 40f else 30f,
+                    8f
+                )
             )
         }
     }

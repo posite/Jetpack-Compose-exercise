@@ -76,4 +76,7 @@ dependencies {
 
     //viewmodel
     implementation(libs.lifecycle.viewmodel.compose)
+
+    //font awesome compose
+    implementation(libs.font.awesome.compose)
 }

@@ -15,6 +15,12 @@
         tools:targetApi="31">
         <activity
             android:name=".presentation.animations.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Compose2" />
+
+        <activity
+            android:name=".presentation.ex1.FinanceExActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Compose2">
