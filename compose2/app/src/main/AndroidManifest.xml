@@ -23,6 +23,12 @@
             android:name=".presentation.ex1.FinanceExActivity"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.Compose2" />
+
+        <activity
+            android:name=".presentation.ex2.CalendarActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Compose2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

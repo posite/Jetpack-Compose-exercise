@@ -26,10 +26,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -53,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import com.guru.fontawesomecomposelib.FaIcon
 import com.guru.fontawesomecomposelib.FaIcons
 import com.posite.compose2.presentation.base.BaseActivity
+import com.posite.compose2.presentation.ex1.model.ConsumeItem
 import com.posite.compose2.ui.theme.SkyBlue
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay

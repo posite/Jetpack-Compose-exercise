@@ -1,4 +1,4 @@
-package com.posite.compose2.presentation.ex1
+package com.posite.compose2.presentation.ex1.model
 
 import androidx.compose.ui.graphics.Color
 import com.guru.fontawesomecomposelib.FaIconType
