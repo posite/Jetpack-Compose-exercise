@@ -27,6 +27,12 @@
 
         <activity
             android:name=".presentation.ex2.CalendarActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Compose2" />
+
+        <activity
+            android:name=".presentation.ex3.TimerActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Compose2">
